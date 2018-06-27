@@ -14,14 +14,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.shine.carouseview.R;
 import com.shine.carouseview.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ImageViewPagerAdapter extends PagerAdapter {
     private Context mContext;
     private LayoutInflater inflater;
+    List<Integer> generated = new ArrayList<Integer>();
+
 
     //constructor to assign the passed Values to appropriate values in the class
     public ImageViewPagerAdapter(Context context) {
@@ -35,14 +40,15 @@ public class ImageViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup view, int position) {
         View imageLayout = inflater.inflate(R.layout.fragment_image, view, false);
 
-         ImageView imageView1 = imageLayout.findViewById(R.id.iv_1);
-         ImageView imageView2 = imageLayout.findViewById(R.id.iv_2);
-         ImageView imageView3 = imageLayout.findViewById(R.id.iv_3);
+        ImageView imageView1 = imageLayout.findViewById(R.id.iv_1);
+        ImageView imageView2 = imageLayout.findViewById(R.id.iv_2);
+        ImageView imageView3 = imageLayout.findViewById(R.id.iv_3);
 
-        Glide.with(mContext).load("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Lionel_Messi_16_June_2018.jpg/220px-Lionel_Messi_16_June_2018.jpg").into(imageView1);
-        Glide.with(mContext).load("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Lionel_Messi_16_June_2018.jpg/220px-Lionel_Messi_16_June_2018.jpg").into(imageView2);
-        Glide.with(mContext).load("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Lionel_Messi_16_June_2018.jpg/220px-Lionel_Messi_16_June_2018.jpg").into(imageView3);
-
+        Glide.with(mContext).load(generateRandomImageURL()).into(imageView1);
+        if (position != 2) {
+            Glide.with(mContext).load(generateRandomImageURL()).into(imageView2);
+            Glide.with(mContext).load(generateRandomImageURL()).into(imageView3);
+        }
         view.addView(imageLayout, 0);
 
         return imageLayout;
@@ -70,6 +76,21 @@ public class ImageViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
+    }
+
+    private String generateRandomImageURL() {
+        Random random = new Random();
+        int x = random.nextInt(900) + 100;
+        int y = random.nextInt(900) + 100;
+        while (true) {
+            if (!generated.contains(x)) {
+                // Done for this iteration
+                generated.add(x);
+                break;
+            }
+        }
+        System.out.println("generateRandomImageURL = " + Constants.IMG_BASE_URL + "/" + x + "" + y + "/");
+        return Constants.IMG_BASE_URL + "/" + x + "/" + y + "/";
     }
 }
