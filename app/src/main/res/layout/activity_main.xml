@@ -13,4 +13,27 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/btn_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/viewPager"
+        android:layout_alignParentStart="true"
+        android:text="Prev"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/viewPager"
+        android:layout_alignTop="@+id/btn_prev"
+        android:text="Next" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_alignParentBottom="true"
+        android:layout_width="500dp"
+        android:layout_height="200dp" />
 </RelativeLayout>
